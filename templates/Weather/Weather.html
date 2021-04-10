@@ -5,15 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./static/css/Weather/Weather.css">
+    <link rel="stylesheet" href="../static/css/Weather/Weather.css">
     <title>Weather</title>
 </head>
 
-<body>
+<!-- <style>
+    body {
+        background-image: url("{{myImage}}");
+    }
+</style> -->
+
+<body background="{{myImage}}">
+    <!-- <img src="{{myImage}}" alt=""> -->
     <div>
 
-        <h1>{{myRequest['name']}}</h1>
-        <h2>{{myRequest['main']['temp']}}ºC</h2>
+        <h1>{{myTemperature['name']}}</h1>
+        <h2>{{myTemperature['main']['temp']}}ºC</h2>
     </div>
 </body>
 
