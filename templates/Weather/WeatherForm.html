@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+</head>
+
+<style>
+    body {
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 20vh;
+    }
+
+    input {
+        font-size: large;
+    }
+</style>
+
+<body>
+
+    <h1>Which city would you like to go to?</h1>
+    <form action="/Weather" method="post">
+        <input type="text" id="city" name="city">
+    </form>
+    <p style="color: red;">{{ErrorMessage}}</p>
+
+</body>
+
+</html>

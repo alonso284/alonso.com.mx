@@ -38,19 +38,26 @@ def RWGsubadj():
 def RCG():
     return render_template('RCG/RCG.html', red=random.randint(0,255), blue=random.randint(0,255),green=random.randint(0,255),)
 
-# @app.route('/Weather', methods=['GET'])
-# def Weather():
-#     myRequest = requests.get('https://api.openweathermap.org/data/2.5/weather?q=Merida&appid=d0f71e8be8c42b4f95e46122e9294681&units=metric').json()
+@app.route('/Weather', methods=['GET', 'POST'])
+def Weather():
+    if request.method == 'GET':
+        return render_template('Weather/WeatherForm.html')
+    else:
+        city = request.form['city']
+        return redirect('/Weather/{}'.format(city))
 
-#     return render_template('Weather/Weather.html', myRequest=myRequest)
+
 
 @app.route('/Weather/<location>', methods=['GET'])
 def WeatherLocation(location):
-    myTemperature = requests.get('https://api.openweathermap.org/data/2.5/weather?appid={}&q={}&units=metric'.format(os.getenv("OP_KEY"), location)).json()
-    myPlace = requests.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={}&input={}&inputtype=textquery'.format(os.getenv("G_KEY"),location)).json()
-    photoReference = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&place_id={}'.format(os.getenv("G_KEY"), myPlace["candidates"][0]["place_id"])).json()
-    myImage = "https://maps.googleapis.com/maps/api/place/photo?key={}&photoreference={}&maxwidth=800&maxheight=1000".format(os.getenv("G_KEY"),photoReference["result"]["photos"][0]["photo_reference"])
-    return render_template('Weather/Weather.html', myTemperature=myTemperature, myImage = myImage)
+    try:
+        myTemperature = requests.get('https://api.openweathermap.org/data/2.5/weather?appid={}&q={}&units=metric'.format(os.getenv("OP_KEY"), location)).json()
+        myPlace = requests.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={}&input={}&inputtype=textquery'.format(os.getenv("G_KEY"),location)).json()
+        photoReference = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&place_id={}'.format(os.getenv("G_KEY"), myPlace["candidates"][0]["place_id"])).json()
+        myImage = "https://maps.googleapis.com/maps/api/place/photo?key={}&photoreference={}&maxwidth=800&maxheight=1000".format(os.getenv("G_KEY"),photoReference["result"]["photos"][0]["photo_reference"])
+        return render_template('Weather/Weather.html', myTemperature=myTemperature, myImage = myImage)
+    except:
+        return render_template('Weather/WeatherForm.html', ErrorMessage = "Oops, not a city, try again")
 
 
 # Authorization
