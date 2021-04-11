@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for
 import json
 import random
 import requests
+import os
+
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
 
 app = Flask(__name__)
-APP_KEY = "AIzaSyDOb-UeE7x6ZFawF9oWFmflSnRlUi3UA0k"
-
 
 @app.route('/', methods=['GET'])
 def home():
@@ -44,10 +46,10 @@ def RCG():
 
 @app.route('/Weather/<location>', methods=['GET'])
 def WeatherLocation(location):
-    myTemperature = requests.get('https://api.openweathermap.org/data/2.5/weather?q={}&appid=d0f71e8be8c42b4f95e46122e9294681&units=metric'.format(location)).json()
-    myPlace = requests.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={}&input={}&inputtype=textquery'.format(APP_KEY,location)).json()
-    photoReference = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&place_id={}'.format(APP_KEY, myPlace["candidates"][0]["place_id"])).json()
-    myImage = "https://maps.googleapis.com/maps/api/place/photo?key={}&photoreference={}&maxwidth=800&maxheight=1000".format(APP_KEY,photoReference["result"]["photos"][0]["photo_reference"])
+    myTemperature = requests.get('https://api.openweathermap.org/data/2.5/weather?appid={}&q={}&units=metric'.format(os.getenv("OP_KEY"), location)).json()
+    myPlace = requests.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={}&input={}&inputtype=textquery'.format(os.getenv("G_KEY"),location)).json()
+    photoReference = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&place_id={}'.format(os.getenv("G_KEY"), myPlace["candidates"][0]["place_id"])).json()
+    myImage = "https://maps.googleapis.com/maps/api/place/photo?key={}&photoreference={}&maxwidth=800&maxheight=1000".format(os.getenv("G_KEY"),photoReference["result"]["photos"][0]["photo_reference"])
     return render_template('Weather/Weather.html', myTemperature=myTemperature, myImage = myImage)
 
 
