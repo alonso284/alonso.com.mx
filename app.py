@@ -9,6 +9,7 @@ import os
 
 app = Flask(__name__)
 
+
 @app.route('/', methods=['GET'])
 def home():
     return render_template('index.html')
@@ -36,7 +37,8 @@ def RWGsubadj():
 
 @app.route('/RandomColorGenerator', methods=['GET'])
 def RCG():
-    return render_template('RCG/RCG.html', red=random.randint(0,255), blue=random.randint(0,255),green=random.randint(0,255),)
+    return render_template('RCG/RCG.html', red=random.randint(0, 255), blue=random.randint(0, 255), green=random.randint(0, 255),)
+
 
 @app.route('/Weather', methods=['GET', 'POST'])
 def Weather():
@@ -47,17 +49,34 @@ def Weather():
         return redirect('/Weather/{}'.format(city))
 
 
-
+# Weather App
 @app.route('/Weather/<location>', methods=['GET'])
 def WeatherLocation(location):
     try:
-        myTemperature = requests.get('https://api.openweathermap.org/data/2.5/weather?appid={}&q={}&units=metric'.format(os.getenv("OP_KEY"), location)).json()
-        myPlace = requests.get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={}&input={}&inputtype=textquery'.format(os.getenv("G_KEY"),location)).json()
-        photoReference = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&place_id={}'.format(os.getenv("G_KEY"), myPlace["candidates"][0]["place_id"])).json()
-        myImage = "https://maps.googleapis.com/maps/api/place/photo?key={}&photoreference={}&maxwidth=800&maxheight=1000".format(os.getenv("G_KEY"),photoReference["result"]["photos"][0]["photo_reference"])
-        return render_template('Weather/Weather.html', myTemperature=myTemperature, myImage = myImage)
+        myTemperature = requests.get(
+            'https://api.openweathermap.org/data/2.5/weather?appid={}&q={}&units=metric'.format(os.getenv("OP_KEY"), location)).json()
+        myPlace = requests.get(
+            'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key={}&input={}&inputtype=textquery'.format(os.getenv("G_KEY"), location)).json()
+        photoReference = requests.get('https://maps.googleapis.com/maps/api/place/details/json?key={}&place_id={}'.format(
+            os.getenv("G_KEY"), myPlace["candidates"][0]["place_id"])).json()
+        myImage = "https://maps.googleapis.com/maps/api/place/photo?key={}&photoreference={}&maxwidth=800&maxheight=1000".format(
+            os.getenv("G_KEY"), photoReference["result"]["photos"][0]["photo_reference"])
+        return render_template('Weather/Weather.html', myTemperature=myTemperature, myImage=myImage)
     except:
-        return render_template('Weather/WeatherForm.html', ErrorMessage = "Oops, not a city, try again")
+        return render_template('Weather/WeatherForm.html', ErrorMessage="Oops, not a city, try again")
+
+
+# TicTac-Toe
+@app.route('/TicTac-Toe', methods=['GET'])
+def TicTacToe():
+    return render_template('TicTac-Toe/TicTac-Toe.html')
+
+# Microsoft Azure Vision
+
+
+@app.route('/Azure', methods=['GET'])
+def MicrosoftAzure():
+    return "online"
 
 
 # Authorization

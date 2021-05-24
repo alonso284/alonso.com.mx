@@ -1,0 +1,29 @@
+h1,
+h2 {
+  text-align: center;
+}
+
+table {
+  margin: auto;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  font-size: 80px;
+}
+
+table,
+td {
+  border: 1px solid black;
+}
+
+td {
+  height: 100px;
+  width: 100px;
+}
+
+.X {
+  color: red;
+}
+
+.O {
+  color: blue;
+}
