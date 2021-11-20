@@ -3,9 +3,10 @@ import json
 import random
 import requests
 import os
+import base64
 
-# from dotenv import load_dotenv
-# load_dotenv()  # take environment variables from .env.
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
 
 app = Flask(__name__)
 
@@ -71,9 +72,36 @@ def WeatherLocation(location):
 def TicTacToe():
     return render_template('TicTac-Toe/TicTac-Toe.html')
 
+
+# spotifySearch
+@app.route('/spotifySearch', methods=['GET'])
+def spotifySearch():
+    # clientID = os.getenv("spotifyIDclient")
+    # clientSECRET = os.getenv(("spotifySECRETclient"))
+
+    # basic = clientID + ":" + clientSECRET
+    # basic_bytes = basic.encode('ascii')
+    # base_bytes = base64.b64encode(basic_bytes)
+    # base = base_bytes.decode('ascii')
+
+    # headers = {'Authorization': "Basic " + base,
+    #            'Content-Type': 'application/x-www-form-urlencoded'}
+    # body = {'grant_type': 'client_credentials'}
+
+    # r = requests.post(
+    #     'https://accounts.spotify.com/api/token', headers=headers, data=body)
+    # print(r.text)
+
+    # authKey = json.loads(r.text)['access_token']
+    # return render_template('spotifySearch/spotifySearch.html', authKey=authKey)
+
+    IDs = ["0XGoStPNhm6ak2wpaeANue",
+           "3QpSL2PDMh2Nvo21IrODkb", "2V1aCYKF6MzdDuyxToaHmO"]
+
+    return render_template('spotifySearch/spotifySearch.html', IDs=IDs)
+
+
 # Microsoft Azure Vision
-
-
 @app.route('/Azure', methods=['GET'])
 def MicrosoftAzure():
     return "online"
