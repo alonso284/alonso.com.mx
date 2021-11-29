@@ -1,3 +1,23 @@
 /* body {
     background-image: url('../../img/concert.jpg');
 } */
+
+img {
+    width: 80px;
+    margin: 20px;
+    border: 10px grey solid;
+}
+
+img.selected {
+    border: 10px lightblue solid;
+}
+
+img:hover {
+    border: 10px orange solid;
+}
+
+div {
+    border: black solid;
+    padding: 20px;
+    margin: 20px;
+}

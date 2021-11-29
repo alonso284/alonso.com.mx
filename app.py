@@ -76,29 +76,18 @@ def TicTacToe():
 # spotifySearch
 @app.route('/spotifySearch', methods=['GET'])
 def spotifySearch():
-    # clientID = os.getenv("spotifyIDclient")
-    # clientSECRET = os.getenv(("spotifySECRETclient"))
+    return render_template('spotifySearch/spotifySearch.html')
 
-    # basic = clientID + ":" + clientSECRET
-    # basic_bytes = basic.encode('ascii')
-    # base_bytes = base64.b64encode(basic_bytes)
-    # base = base_bytes.decode('ascii')
 
-    # headers = {'Authorization': "Basic " + base,
-    #            'Content-Type': 'application/x-www-form-urlencoded'}
-    # body = {'grant_type': 'client_credentials'}
+@app.route('/spotifySearch/search', methods=['GET'])
+def spotifySearch_search():
+    return render_template('spotifySearch/search.html')
 
-    # r = requests.post(
-    #     'https://accounts.spotify.com/api/token', headers=headers, data=body)
-    # print(r.text)
 
-    # authKey = json.loads(r.text)['access_token']
-    # return render_template('spotifySearch/spotifySearch.html', authKey=authKey)
-
-    IDs = ["0XGoStPNhm6ak2wpaeANue",
-           "3QpSL2PDMh2Nvo21IrODkb", "2V1aCYKF6MzdDuyxToaHmO"]
-
-    return render_template('spotifySearch/spotifySearch.html', IDs=IDs)
+@app.route('/spotifySearch/result', methods=['GET'])
+def spotifySearch_result():
+    mood = request.args.get("mood")
+    return mood
 
 
 # Microsoft Azure Vision
