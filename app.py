@@ -1,9 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify, Markup
 import json
 import random
 import requests
 import os
 import base64
+import psycopg2
+from urllib.parse import urlparse
+from queue import PriorityQueue
 
 # from dotenv import load_dotenv
 # load_dotenv()  # take environment variables from .env.
@@ -87,7 +90,42 @@ def spotifySearch_search():
 @app.route('/spotifySearch/result', methods=['GET'])
 def spotifySearch_result():
     mood = request.args.get("mood")
-    return mood
+
+    result = urlparse(os.getenv("DATABASE_URL"))
+
+    # connect to the db
+    conn = psycopg2.connect(
+        host=result.hostname,
+        database=result.path[1:],
+        user=result.username,
+        password=result.password,
+        port=result.port
+    )
+    # cursor
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM playlists")
+    results = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    orderedPlaylists = []
+
+    for r in results:
+        coincidence = 0
+        total = 0
+        for l in range(0, len(r[1])):
+            if mood[l] != 'n' and r[1][l] != 'n':
+                total += 1
+                coincidence += (mood[l] == r[1][l])
+        if(total == 0 or coincidence == 0):
+            continue
+        else:
+            orderedPlaylists.append(
+                (round((coincidence/total)*100), r))
+
+    # return render_template('spotifySearch/results.html', playlists=json.dumps(orderedPlaylists))
+    return render_template('spotifySearch/results.html', playlists=orderedPlaylists)
 
 
 # Microsoft Azure Vision

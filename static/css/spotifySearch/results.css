@@ -1,0 +1,13 @@
+/* div#results{
+    border: 5px black solid;
+}
+
+div.result {
+    border: 5px black solid;
+} */
+
+div {
+    border: black solid;
+    padding: 20px;
+    margin: 20px;
+}
