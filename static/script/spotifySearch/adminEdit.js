@@ -4,6 +4,38 @@ const q = 12;
 const op = ['A', 'B', 'C', 'D'];
 var mood = "";
 
+function validateMood(mood){
+    if(mood.length != q) return false;
+    for(var i = 0; i < q; i++){
+        if(!(mood[i] == 'n' || mood[i] == 'A' || mood[i] == 'B' || mood[i] == 'C' || mood[i] == 'D')){
+            return false;
+        }
+    }
+    return true;
+}
+
+const moodForm = document.getElementById('mood');
+moodForm.addEventListener('input', ()=>{
+    if(validateMood(moodForm.value)){
+        document.getElementById('error').innerHTML = "Valid Mood";
+        document.getElementById('submit').style.display = 'block';
+
+        var qsDiv = document.getElementById('questions');
+        for(var i = 0; i < q; i++){
+            var qDiv = qsDiv.childNodes[i].getElementsByTagName('img');
+            for(var j = 0; j < 4; j++){
+                if(moodForm.value[i] == qDiv[j].id) qDiv[j].className = "selected";
+                else qDiv[j].className = "";
+            }
+        }
+
+
+    }else{
+        document.getElementById('error').innerHTML = "Not A Valid Mood";
+        document.getElementById('submit').style.display = 'none';
+    }
+});
+
 // make int and address
 function toAdress(address){
     var Saddress = address.toString();
@@ -24,7 +56,34 @@ function selectIMG(e){
     parentDiv = e.target.parentElement.getElementsByTagName("img");
     for(i in parentDiv) parentDiv[i].className = "";
     e.target.classList.add("selected");
-    chargeMood();
+
+    var tempMood = "";
+    var qsDiv = document.getElementById('questions');
+    for(var i = 0; i < q; i++){
+        var qDiv = qsDiv.childNodes[i].getElementsByTagName('img');
+        for(var j = 0; j < 5; j++){
+            if(j == 4){
+                tempMood = tempMood.concat('n');
+                break;
+            }
+            if(qDiv[j].className == "selected"){ 
+                tempMood =  tempMood.concat(qDiv[j].id);
+                break;
+            }
+        }
+    }
+
+    console.log(tempMood)
+    moodForm.value = tempMood;
+
+    document.getElementById('error').innerHTML = "Valid Mood";
+    document.getElementById('submit').style.display = 'block';
+
+    // const index = parseInt(e.target.parentElement.id);
+    // const pastMood = moodForm.value;
+    // moodForm.value = pastMood.substring(0, index) + e.target.id + pastMood.substring(index+1);
+    // console.log(pastMood.substring(0, index) + e.target.id + pastMood.substring(index+1));
+
 }
 
 function setUp(){
@@ -56,6 +115,7 @@ function setUp(){
             image.id = op[d];
             image.setAttribute("onclick", "selectIMG(event)");
             image.src = "../../static/questions/q"+key+"/img/"+op[d]+".png";
+            if(moodForm.value[parseInt(key)] == op[d]) image.className = "selected";
             qDiv.appendChild(image);
         }
 

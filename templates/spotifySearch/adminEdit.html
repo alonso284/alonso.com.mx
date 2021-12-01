@@ -10,14 +10,15 @@
 <body onload="setUp()">
 
     <h1>{{playlist[0]}}</h1>
-    <iframe src="https://open.spotify.com/embed/playlist/{{playlist[0]}}" width="50%" height="250" style="float: right;" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    <iframe src="https://open.spotify.com/embed/playlist/{{playlist[0]}}" width="50%" height="400" style="float: right;" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-    <form action="POST" style="min-height:250px;">
-        <label for="name">Mood</label><br>
-        <input type="text" value="{{playlist[1]}}" name="mood"><br><br>
+    <form method="POST" action="/spotifySearch/admin/{{playlist[0]}}" style="min-height:400px;">
+        <label for="mood">Mood</label><br>
+        <input type="text" value="{{playlist[1]}}" name="mood" id="mood"><br>
+        <span id="error">Valid Mood</span><br><br>
         <label for="description">Description</label><br>
-        <textarea name="description" id="" cols="30" rows="10">{{playlist[2]}}</textarea><br>
-        <input type="submit">
+        <textarea name="description" id="description" cols="75" rows="15">{{playlist[2]}}</textarea><br>
+        <input type="submit" id="submit">
     </form>
 
 

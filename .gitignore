@@ -1,2 +1,4 @@
+.gitignore
 .env
 pruebas.py
+SpotifySearch.sql

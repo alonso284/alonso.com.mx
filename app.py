@@ -10,8 +10,8 @@ from urllib.parse import urlparse
 from queue import PriorityQueue
 from markupsafe import escape
 
-# from dotenv import load_dotenv
-# load_dotenv()  # take environment variables from .env.
+from dotenv import load_dotenv
+load_dotenv()  # take environment variables from .env.
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -117,8 +117,40 @@ def admin():
     return redirect(url_for('login'))
 
 
-@app.route('/spotifySearch/admin/<mood>', methods=['GET'])
-def adminEdit(mood):
+@app.route('/spotifySearch/admin/<playlistID>', methods=['GET', 'POST'])
+def adminEdit(playlistID):
+    if request.method == "POST":
+        print(request.form['mood'])
+        print(request.form['description'])
+        print(playlistID)
+
+        for i in request.form['mood']:
+            print(i)
+            if not(i == 'n' or i == 'A' or i == 'B' or i == 'C' or i == 'D'):
+                return redirect(url_for('admin'))
+
+        result = urlparse(os.getenv("DATABASE_URL"))
+
+        # connect to the db
+        conn = psycopg2.connect(
+            host=result.hostname,
+            database=result.path[1:],
+            user=result.username,
+            password=result.password,
+            port=result.port
+        )
+        # cursor
+        cursor = conn.cursor()
+
+        cursor.execute(
+            f"UPDATE playlists SET mood='{request.form['mood']}',  description = '{request.form['description']}' WHERE playlistID='{playlistID}';")
+
+        cursor.close()
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for('admin'))
+
     if 'username' in session:
         result = urlparse(os.getenv("DATABASE_URL"))
 
@@ -133,7 +165,8 @@ def adminEdit(mood):
         # cursor
         cursor = conn.cursor()
 
-        cursor.execute(f"SELECT * FROM playlists WHERE playlistID='{mood}'")
+        cursor.execute(
+            f"SELECT * FROM playlists WHERE playlistID='{playlistID}'")
         toEdit = cursor.fetchall()
         cursor.close()
         conn.close()
