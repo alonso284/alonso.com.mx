@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adminEdit</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/spotifySearch/adminEdit.css')}}">
+</head>
+<body onload="setUp()">
+
+    <h1>{{playlist[0]}}</h1>
+    <iframe src="https://open.spotify.com/embed/playlist/{{playlist[0]}}" width="50%" height="250" style="float: right;" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+
+    <form action="POST" style="min-height:250px;">
+        <label for="name">Mood</label><br>
+        <input type="text" value="{{playlist[1]}}" name="mood"><br><br>
+        <label for="description">Description</label><br>
+        <textarea name="description" id="" cols="30" rows="10">{{playlist[2]}}</textarea><br>
+        <input type="submit">
+    </form>
+
+
+    <div id="questions"></div>
+    
+</body>
+
+<script src="{{url_for('static', filename='script/spotifySearch/adminEdit.js')}}"></script>
+</html>

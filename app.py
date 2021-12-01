@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify, Markup
+from flask import Flask, render_template, request, redirect, url_for, jsonify, Markup, session
+from flask_login import LoginManager
 import json
 import random
 import requests
@@ -7,11 +8,20 @@ import base64
 import psycopg2
 from urllib.parse import urlparse
 from queue import PriorityQueue
+from markupsafe import escape
 
 # from dotenv import load_dotenv
 # load_dotenv()  # take environment variables from .env.
 
 app = Flask(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
+app.secret_key = os.getenv("FLASK_KEY").encode("utf-8")
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.get(user_id)
 
 
 @app.route('/', methods=['GET'])
@@ -80,6 +90,81 @@ def TicTacToe():
 @app.route('/spotifySearch', methods=['GET'])
 def spotifySearch():
     return render_template('spotifySearch/spotifySearch.html')
+
+
+@app.route('/spotifySearch/admin', methods=['GET'])
+def admin():
+    if 'username' in session:
+        result = urlparse(os.getenv("DATABASE_URL"))
+
+        # connect to the db
+        conn = psycopg2.connect(
+            host=result.hostname,
+            database=result.path[1:],
+            user=result.username,
+            password=result.password,
+            port=result.port
+        )
+        # cursor
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM playlists")
+        results = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        return render_template('spotifySearch/admin.html', playlists=results)
+    return redirect(url_for('login'))
+
+
+@app.route('/spotifySearch/admin/<mood>', methods=['GET'])
+def adminEdit(mood):
+    if 'username' in session:
+        result = urlparse(os.getenv("DATABASE_URL"))
+
+        # connect to the db
+        conn = psycopg2.connect(
+            host=result.hostname,
+            database=result.path[1:],
+            user=result.username,
+            password=result.password,
+            port=result.port
+        )
+        # cursor
+        cursor = conn.cursor()
+
+        cursor.execute(f"SELECT * FROM playlists WHERE playlistID='{mood}'")
+        toEdit = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        return render_template('spotifySearch/adminEdit.html', playlist=toEdit[0])
+    return redirect(url_for('login'))
+
+
+@app.route('/spotifySearch/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        if request.form['username'] == os.getenv("userAdmin"):
+            session['username'] = request.form['username']
+
+        return redirect(url_for('admin'))
+
+    if 'username' in session:
+        return redirect(url_for('admin'))
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+
+
+@app.route('/spotifySearch/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 
 @app.route('/spotifySearch/search', methods=['GET'])
