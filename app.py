@@ -10,8 +10,8 @@ from urllib.parse import urlparse
 from queue import PriorityQueue
 from markupsafe import escape
 
-from dotenv import load_dotenv
-load_dotenv()  # take environment variables from .env.
+# from dotenv import load_dotenv
+# load_dotenv()  # take environment variables from .env.
 
 app = Flask(__name__)
 login_manager = LoginManager()
