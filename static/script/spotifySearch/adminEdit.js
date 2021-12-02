@@ -2,7 +2,7 @@
 const size = 3;
 const q = 12;
 const op = ['A', 'B', 'C', 'D'];
-var mood = "";
+const moodForm = document.getElementById('mood');
 
 function validateMood(mood){
     if(mood.length != q) return false;
@@ -14,7 +14,6 @@ function validateMood(mood){
     return true;
 }
 
-const moodForm = document.getElementById('mood');
 moodForm.addEventListener('input', ()=>{
     if(validateMood(moodForm.value)){
         document.getElementById('error').innerHTML = "Valid Mood";
@@ -28,7 +27,6 @@ moodForm.addEventListener('input', ()=>{
                 else qDiv[j].className = "";
             }
         }
-
 
     }else{
         document.getElementById('error').innerHTML = "Not A Valid Mood";
@@ -46,10 +44,6 @@ function toAdress(address){
 function selectQ(){
     var temp = Math.random()*100;
     return (temp - temp%1)%q;
-}
-
-function chargeMood(){
-    
 }
 
 function selectIMG(e){
@@ -78,16 +72,11 @@ function selectIMG(e){
 
     document.getElementById('error').innerHTML = "Valid Mood";
     document.getElementById('submit').style.display = 'block';
-
-    // const index = parseInt(e.target.parentElement.id);
-    // const pastMood = moodForm.value;
-    // moodForm.value = pastMood.substring(0, index) + e.target.id + pastMood.substring(index+1);
-    // console.log(pastMood.substring(0, index) + e.target.id + pastMood.substring(index+1));
-
 }
 
 function setUp(){
     const main = document.getElementById("questions");
+    const moodForm = document.getElementById('mood');
 
     // create set of questions
     var qSet = new Set([]);
@@ -122,13 +111,3 @@ function setUp(){
         main.appendChild(qDiv);
     })
 }
-
-
-
-
-
-
-
-
-
-
