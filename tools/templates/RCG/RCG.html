@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{{url_for('tools.static', filename='./css/RCG/RCG.css')}}">
+    <title>Random Color Generator</title>
+</head>
+
+<body style="background-color: rgb({{red}},{{green}},{{blue}});">
+
+    <a href="/"> &#60; Home</a>
+
+    <div>
+        <p id="black">rgb({{red}}, {{green}}, {{blue}})</p>
+        <p id="grey">rgb({{red}}, {{green}}, {{blue}})</p>
+        <p id="white">rgb({{red}}, {{green}}, {{blue}})</p>
+    </div>
+
+
+
+
+</body>
+
+</html>

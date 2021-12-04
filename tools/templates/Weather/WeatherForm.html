@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{{url_for('tools.static', filename='./css/Weather/WeatherForm.css')}}">
+    <title>Weather</title>
+</head>
+
+<body>
+
+    <h1>Which city would you like to go to?</h1>
+    <form action="{{url_for('tools.Weather')}}" method="post">
+        <input type="text" id="city" name="city">
+    </form>
+    <p style="color: red;">{{ErrorMessage}}</p>
+
+</body>
+
+</html>

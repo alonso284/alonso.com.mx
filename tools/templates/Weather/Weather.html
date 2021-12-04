@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{{url_for('tools.static', filename='./css/Weather/Weather.css')}}">
+    <title>Weather</title>
+</head>
+
+<body background="{{myImage}}">
+
+    <a href="{{url_for('tools.Weather')}}">&#60; Back</a>
+    <div>
+
+        <h1>{{myTemperature['name']}}</h1>
+        <h2>{{myTemperature['main']['temp']}}ºC</h2>
+    </div>
+</body>
+
+</html>

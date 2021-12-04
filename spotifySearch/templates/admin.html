@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='./css/admin.css')}}">
+    <title>Administrator</title>
+</head>
+<body>
+
+
+    <a href="{{url_for('spotifySearch.logout')}}">logout</a>
+    <table style="border: black solid;">
+        <tr>
+          <th>playlist ID</th>
+          <th>mood</th>
+          <th>Description</th>
+        </tr>
+        {% for r in playlists %}
+            <tr>
+                <td style="font-family:'Lucida Console', monospace">{{r[0]}}</td>
+                <td style="font-family:'Lucida Console', monospace">{{r[1]}}</td>
+                <td>{{r[2]}}</td>
+                <td><a href="{{url_for('spotifySearch.adminEdit', playlistID=r[0])}}">Edit</a></td>
+            </tr>
+        {% endfor %}
+      </table> 
+    
+</body>
+<script src="{{url_for('spotifySearch.static', filename='./script/adminEdit.js')}}"></script>
+</html>

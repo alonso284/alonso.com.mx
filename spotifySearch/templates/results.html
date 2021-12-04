@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='./css/results.css')}}">
+    <title>Result</title>
+</head>
+<body onload="setUp()">
+    <div id="results">
+        {% for r in playlists[::-1] %}
+            <div class="result">
+                <h1 class="">Esta playlist tiene una coincidencia de {{r[0]}}% con tu <em>Mood</em> </h1>
+                <iframe src="https://open.spotify.com/embed/playlist/{{r[1][0]}}" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                <p>{{r[1][2]}}</p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+<script src="{{url_for('spotifySearch.static', filename='./script/results.js')}}"></script>
+</html>
