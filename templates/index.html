@@ -2,12 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>alonso284's Blog</title>
-    <link rel="stylesheet" type="text/css" href="./static/css/style.css">
-    <link rel="shortcut icon" href="./static/img/icon.png">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>alonso284</title>
+    <link href="{{url_for('static', filename='css/style.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/icon.png')}}">
 </head>
 
 <body>
@@ -16,7 +15,7 @@
         <hr><br>
         <div id="aboutMe">
             <h2>About Me</h2>
-            <p><img src="./static/img/aboutMe.jpg" alt="aboutMe"> Lorem, ipsum dolor sit amet consectetur adipisicing
+            <p><img src="{{url_for('static', filename='img/aboutMe.jpg')}}" alt="aboutMe"> Lorem, ipsum dolor sit amet consectetur adipisicing
                 elit. Neque quos, ipsam libero pariatur omnis obcaecati culpa temporibus. Quaerat molestiae laudantium,
                 suscipit ducimus nam ex iusto, deleniti facere ratione necessitatibus ad. Lorem, ipsum dolor sit amet
                 consectetur adipisicing elit. Neque quos, ipsam libero pariatur omnis obcaecati culpa temporibus.
