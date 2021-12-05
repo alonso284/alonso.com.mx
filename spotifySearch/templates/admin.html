@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/admin.css')}}">
     <title>Administrator</title>
+    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/admin.css')}}">
+    <link rel="shortcut icon" href="{{url_for('spotifySearch.static', filename='img/iconSpotifySearch.png')}}">
 </head>
 <body>
 
@@ -22,6 +23,7 @@
                 <td style="font-family:'Lucida Console', monospace">{{r[1]}}</td>
                 <td>{{r[2]}}</td>
                 <td><a href="{{url_for('spotifySearch.adminEdit', playlistID=r[0])}}">Edit</a></td>
+                
             </tr>
         {% endfor %}
       </table> 

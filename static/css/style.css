@@ -25,9 +25,9 @@ div#main{
 
 div#main div#aboutMe img{
     float: right;
-    max-width: 20vw;
-    min-width: 150px;
+    max-width: 15vw;
+    min-width: 125px;
     padding: 4%;
     padding-right: 0;
-    padding-top: 0;
+    padding-top: 20px;
 }

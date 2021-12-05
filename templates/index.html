@@ -14,36 +14,31 @@
         <h1>Welcome to my Blog</h1>
         <hr><br>
         <div id="aboutMe">
-            <h2>About Me</h2>
-            <p><img src="{{url_for('static', filename='img/aboutMe.jpg')}}" alt="aboutMe"> Lorem, ipsum dolor sit amet consectetur adipisicing
-                elit. Neque quos, ipsam libero pariatur omnis obcaecati culpa temporibus. Quaerat molestiae laudantium,
-                suscipit ducimus nam ex iusto, deleniti facere ratione necessitatibus ad. Lorem, ipsum dolor sit amet
-                consectetur adipisicing elit. Neque quos, ipsam libero pariatur omnis obcaecati culpa temporibus.
-                Quaerat molestiae laudantium, suscipit ducimus nam ex iusto, deleniti facere ratione necessitatibus ad.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque quos, ipsam libero pariatur omnis
-                obcaecati culpa temporibus. Quaerat molestiae laudantium, suscipit ducimus nam ex iusto, deleniti facere
-                ratione necessitatibus ad. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque quos, ipsam
-                libero pariatur omnis obcaecati culpa temporibus. Quaerat molestiae laudantium, suscipit ducimus nam ex
-                iusto, deleniti facere ratione necessitatibus ad. Lorem, ipsum dolor sit amet consectetur adipisicing
-                elit. Neque quos, ipsam libero pariatur omnis obcaecati culpa temporibus. Quaerat molestiae laudantium,
-                suscipit ducimus nam ex iusto, deleniti facere ratione necessitatibus ad. Lorem, ipsum dolor sit amet
-                consectetur adipisicing elit. Neque quos, ipsam libero pariatur omnis obcaecati culpa temporibus.
-                Quaerat molestiae laudantium, suscipit ducimus nam ex iusto, deleniti facere ratione necessitatibus ad.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque quos, ipsam libero pariatur omnis
-                obcaecati culpa temporibus. Quaerat molestiae laudantium, suscipit ducimus nam ex iusto, deleniti facere
-                ratione necessitatibus ad. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque quos, ipsam
-                libero pariatur omnis obcaecati culpa temporibus. Quaerat molestiae laudantium, suscipit ducimus nam ex
-                iusto, deleniti facere ratione necessitatibus ad.
+            <p><img src="{{url_for('static', filename='img/aboutMe.jpg')}}" alt="aboutMe"> 
+                Welcome to my blog, my little corner in the internet where I get to do whatever I want. 
+                Currently, the only purpose of the website is to share apps where I apply 
+                some of the new things I learn day by day. 
+                If you’d like to be a part of my programmnig journey, don’t hesitate on 
+                visint from time to time and checking out some of the features I add or apps that I develop.
             </p>
-
+            <p>
+                You can find the site's repo in <a href="https://github.com/alonso284/alonso284.com"> this link</a>.
+                If you have any fun idea for an app or project, please send me a message and I'll look into it.
+            </p>
         </div>
         <hr><br>
         <div id="webApps">
+            <h2>Currently Working On...</h2>
+            <p>
+                Here are some apps I'm working on. Some of them are very simple, others not so much
+                I try to implement stuff that I learn, so be patient if some of the features don't do
+                exactly what they are intented for.
+            </p>
             <h2>Web Apps</h2>
             <ul>
                 <li> <a href="{{url_for('tools.RWG')}}">RWG (on development)</a> </li>
                 <li> <a href="{{url_for('tools.RCG')}}">RCG (on development)</a> </li>
-                <li> <a href="{{url_for('tools.Weather')}}">Wheather checker (on development)</a></li>
+                <li> <a href="{{url_for('tools.Weather')}}">Wheather</a></li>
                 <li> <a href="{{url_for('tools.TicTacToe')}}">TicTac-Toe</a></li>
                 <li> <a href="{{url_for('spotifySearch.index')}}">spotifySearch (on development)</a></li>
             </ul>
