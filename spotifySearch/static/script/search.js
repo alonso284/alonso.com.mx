@@ -77,7 +77,7 @@ function setUp(){
             var image = document.createElement("img");
             image.id = op[d];
             image.setAttribute("onclick", "selectIMG(event)");
-            image.src = "../spotifySearch/static/data/questions/q"+key+"/img/"+op[d]+".png";
+            image.src = "../spotifySearch/static/data/questions/q"+key+"/img/"+op[d]+".jpg";
             qDiv.appendChild(image);
         }
 
