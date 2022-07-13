@@ -3,6 +3,7 @@ import requests
 import os
 import base64
 import psycopg2
+from lxml.html import fromstring
 from urllib.parse import urlparse
 
 spotifySearch = Blueprint('spotifySearch', __name__,
@@ -14,29 +15,34 @@ def index():
     return render_template('spotifySearch.html')
 
 
-@spotifySearch.route('/admin', methods=['GET'])
+@spotifySearch.route('/admin', methods=['GET', 'POST'])
 def admin():
-    if 'username' in session:
-        result = urlparse(os.getenv("DATABASE_URL"))
+    if request.method == "GET":
+        if 'username' in session:
+            result = urlparse(os.getenv("DATABASE_URL"))
 
-        # connect to the db
-        conn = psycopg2.connect(
-            host=result.hostname,
-            database=result.path[1:],
-            user=result.username,
-            password=result.password,
-            port=result.port
-        )
-        # cursor
-        cursor = conn.cursor()
+            # connect to the db
+            conn = psycopg2.connect(
+                host=result.hostname,
+                database=result.path[1:],
+                user=result.username,
+                password=result.password,
+                port=result.port
+            )
+            # cursor
+            cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM playlists")
-        results = cursor.fetchall()
-        cursor.close()
-        conn.close()
+            cursor.execute("SELECT * FROM playlists")
+            results = cursor.fetchall()
+            cursor.close()
+            conn.close()
 
-        return render_template('admin.html', playlists=results)
-    return redirect(url_for('spotifySearch.login'))
+            return render_template('admin.html', playlists=results)
+        return redirect(url_for('spotifySearch.login'))
+    else:
+        return redirect(url_for('spotifySearch.admin'))
+        # get post request to add playlist
+        # check if ID is valid, if it is, add it to de data base
 
 
 @spotifySearch.route('/admin/<playlistID>', methods=['GET', 'POST'])

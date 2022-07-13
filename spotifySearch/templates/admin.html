@@ -10,7 +10,12 @@
 <body>
 
 
-    <a href="{{url_for('spotifySearch.logout')}}">logout</a>
+    <a href="{{url_for('spotifySearch.logout')}}">logout</a> <br>
+    <form action="{{url_for('spotifySearch.admin')}}" method="post">
+        <input type="text" id="ID" name="ID">
+        <input type="submit" value="add">
+    </form>
+    <br>
     <table style="border: black solid;">
         <tr>
           <th>playlist ID</th>
