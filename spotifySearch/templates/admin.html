@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+{% extends "base.html" %}
+
+{% block head %}
     <title>Administrator</title>
     <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/admin.css')}}">
-    <link rel="shortcut icon" href="{{url_for('spotifySearch.static', filename='img/iconSpotifySearch.png')}}">
-</head>
-<body>
+{% endblock %}
 
-
+{% block content %}
     <a href="{{url_for('spotifySearch.logout')}}">logout</a> <br>
     <form action="{{url_for('spotifySearch.admin')}}" method="post">
         <input type="text" id="ID" name="ID">
@@ -35,8 +31,9 @@
                 
             </tr>
         {% endfor %}
-      </table> 
-    
-</body>
-<script src="{{url_for('spotifySearch.static', filename='script/adminEdit.js')}}"></script>
-</html>
+    </table> 
+{% endblock %}
+
+{% block script %}
+    <script src="{{url_for('spotifySearch.static', filename='script/adminEdit.js')}}"></script>
+{% endblock %}

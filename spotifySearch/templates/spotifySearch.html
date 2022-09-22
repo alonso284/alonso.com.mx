@@ -1,16 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+{% extends "base.html" %}
+
+{% block head %}
     <title>Spofity Search</title>
     <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/spotifySearch.css')}}">
-    <link rel="shortcut icon" href="{{url_for('spotifySearch.static', filename='img/iconSpotifySearch.png')}}">
-</head>
-<body>
-
+{% endblock %}
+    
+{% block content %}
     <a href="{{url_for('spotifySearch.search')}}">Search</a>
+{% endblock %}
 
-</body>
-<script src="{{url_for('spotifySearch.static', filename='script/search.js')}}"></script>
-</html>
+{% block scripts %}
+    <script src="{{url_for('spotifySearch.static', filename='script/search.js')}}"></script>
+{% endblock %}

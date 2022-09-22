@@ -1,13 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+{% extends "base.html" %}
+
+{% block head %}
     <title>Result</title>
     <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/results.css')}}">
-    <link rel="shortcut icon" href="{{url_for('spotifySearch.static', filename='img/iconSpotifySearch.png')}}">
-</head>
-<body onload="setUp()">
+{% endblock %}
+
+{% block content %}
     <div id="results">
         {% for r in playlists[::-1] %}
             <div class="result">
@@ -17,6 +15,8 @@
             </div>
         {% endfor %}
     </div>
-</body>
-<script src="{{url_for('spotifySearch.static', filename='script/results.js')}}"></script>
-</html>
+{% endblock%}
+
+{% block script %}
+    <script src="{{url_for('spotifySearch.static', filename='script/results.js')}}"></script>
+{% endblock %}

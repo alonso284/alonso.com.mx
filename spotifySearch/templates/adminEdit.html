@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Administrator</title>
-    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/adminEdit.css')}}">
-    <link rel="shortcut icon" href="{{url_for('spotifySearch.static', filename='img/iconSpotifySearch.png')}}">
-</head>
-<body onload="setUp()">
+{% extends "base.html" %}
 
+{% block head %} 
+<title>Administrator</title>
+<link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/adminEdit.css')}}">
+{% endblock %} 
+
+{% block content %}
     <h1>{{playlist[0]}}</h1>
     <iframe src="https://open.spotify.com/embed/playlist/{{playlist[0]}}" width="50%" height="400" style="float: right;" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
@@ -21,12 +18,12 @@
         <input type="submit" id="submit">
     </form>
 
-
     <div id="questions"></div>
 
     <a href="{{url_for('spotifySearch.RemovePlaylist', playlistID=playlist[0])}}">Delete</a>
-    
-</body>
+{% endblock %} 
 
+{% block scripts %}
 <script src="{{url_for('spotifySearch.static', filename='script/adminEdit.js')}}"></script>
-</html>
+<script>body = document.getElementsByTagName('body')[0].onload = setUp();</script>
+{% endblock %} 
