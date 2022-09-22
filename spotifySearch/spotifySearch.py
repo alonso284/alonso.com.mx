@@ -11,6 +11,7 @@ spotifySearch = Blueprint('spotifySearch', __name__,
 
 @spotifySearch.route('/', methods=['GET'])
 def index():
+    session['username'] = 'normal'
     return render_template('spotifySearch.html')
 
 
