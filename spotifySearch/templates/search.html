@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <title>Search</title>
-    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/search.css')}}">
+<title>Search</title>
+<link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/search.css')}}">
 {% endblock %}
     
 {% block content %}
-    <div id="questions"></div>
-    <a id="load" href="">Find Playlist</a>
+<div id="questions"></div>
+<a id="load" href="">Find Playlist</a>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{url_for('spotifySearch.static', filename='script/search.js')}}"></script>
+<script src="{{url_for('spotifySearch.static', filename='script/search.js')}}"></script>
 {% endblock %}

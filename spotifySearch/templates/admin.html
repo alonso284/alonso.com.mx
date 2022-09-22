@@ -1,39 +1,39 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <title>Administrator</title>
-    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/admin.css')}}">
+<title>Administrator</title>
+<link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/admin.css')}}">
 {% endblock %}
 
 {% block content %}
-    <a href="{{url_for('spotifySearch.logout')}}">logout</a> <br>
-    <form action="{{url_for('spotifySearch.admin')}}" method="post">
-        <input type="text" id="ID" name="ID">
-        <input type="submit" value="add">
-    </form>
-    <br>
-    <table style="border: black solid;">
+<a href="{{url_for('spotifySearch.logout')}}">logout</a> <br>
+<form action="{{url_for('spotifySearch.admin')}}" method="post">
+    <input type="text" id="ID" name="ID">
+    <input type="submit" value="add">
+</form>
+<br>
+<table style="border: black solid;">
+    <tr>
+        <th>playlist ID</th>
+        <th>mood</th>
+        <th>Description</th>
+        <th>Status</th>
+    </tr>
+    {% for i in range(len) %}
         <tr>
-          <th>playlist ID</th>
-          <th>mood</th>
-          <th>Description</th>
-          <th>Status</th>
+            <td style="font-family:'Lucida Console', monospace">{{playlists[i][0]}}</td>
+            <td style="font-family:'Lucida Console', monospace">{{playlists[i][1]}}</td>
+            <td>{{playlists[i][2]}}</td>
+            <td>{{status[i]}}</td>
+            <td><a href="{{url_for('spotifySearch.adminEdit', playlistID=playlists[i][0])}}">Edit</a></td>
+            <td><a href="{{url_for('spotifySearch.RemovePlaylist', playlistID=playlists[i][0])}}">Delete</a></td>
+            
+            
         </tr>
-        {% for i in range(len) %}
-            <tr>
-                <td style="font-family:'Lucida Console', monospace">{{playlists[i][0]}}</td>
-                <td style="font-family:'Lucida Console', monospace">{{playlists[i][1]}}</td>
-                <td>{{playlists[i][2]}}</td>
-                <td>{{status[i]}}</td>
-                <td><a href="{{url_for('spotifySearch.adminEdit', playlistID=playlists[i][0])}}">Edit</a></td>
-                <td><a href="{{url_for('spotifySearch.RemovePlaylist', playlistID=playlists[i][0])}}">Delete</a></td>
-                
-                
-            </tr>
-        {% endfor %}
-    </table> 
+    {% endfor %}
+</table> 
 {% endblock %}
 
 {% block script %}
-    <script src="{{url_for('spotifySearch.static', filename='script/adminEdit.js')}}"></script>
+<script src="{{url_for('spotifySearch.static', filename='script/adminEdit.js')}}"></script>
 {% endblock %}

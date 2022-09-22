@@ -1,41 +1,35 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>TicTac-Toe</title>
-    <link href="{{url_for('tools.static', filename='css/TicTacToe/TicTacToe.css')}}" rel="stylesheet" type="text/css" />
-    <link rel="shortcut icon" href="{{url_for('tools.static', filename='img/iconTool.png')}}">
-  </head>
+{% extends "./base.html" %}
 
+{% block head %}
+<title>TicTac-Toe</title>
+<link href="{{url_for('tools.static', filename='css/TicTacToe/TicTacToe.css')}}" rel="stylesheet" type="text/css" />
+{% endblock %}
 
-  <body>
+{% block content %}
+<h1>TicTac-Toe</h1>
+  
+<table>
+  <tr>
+    <td id = "A3"> </td>
+    <td id = "B3"> </td>
+    <td id = "C3"> </td>
+  </tr>
+  <tr>
+    <td id = "A2"> </td>
+    <td id = "B2"> </td>
+    <td id = "C2"> </td>
+  </tr>
+  <tr>
+    <td id = "A1"> </td>
+    <td id = "B1"> </td>
+    <td id = "C1"> </td>
+  </tr>
+</table>
 
-    <h1>TicTac-Toe</h1>
-    
+<h2 >X wins: <span id="X">0</span></h2>
+<h2 >O wins: <span id="O">0</span></h2>
+{% endblock %}
 
-    <table>
-      <tr>
-        <td id = "A3"> </td>
-        <td id = "B3"> </td>
-        <td id = "C3"> </td>
-      </tr>
-      <tr>
-        <td id = "A2"> </td>
-        <td id = "B2"> </td>
-        <td id = "C2"> </td>
-      </tr>
-      <tr>
-        <td id = "A1"> </td>
-        <td id = "B1"> </td>
-        <td id = "C1"> </td>
-      </tr>
-    </table>
-
-    <h2 >X wins: <span id="X">0</span></h2>
-    <h2 >O wins: <span id="O">0</span></h2>
-
-    
-    <script src="{{url_for('tools.static', filename='script/TicTacToe/TicTacToe.js')}}"></script>
-  </body>
-</html>
+{% block script %}
+<script src="{{url_for('tools.static', filename='script/TicTacToe/TicTacToe.js')}}"></script>
+{% endblock %}

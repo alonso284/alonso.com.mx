@@ -1,24 +1,22 @@
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Random Word Generator</title>
-    <link rel="stylesheet" href="{{url_for('tools.static', filename='css/RWG/RWG.css')}}">
-    <link rel="shortcut icon" href="{{url_for('tools.static', filename='img/iconTool.png')}}">
-</head>
+{% extends "./base.html" %}
 
-<body>
+{% block head %}
+<title>Random Word Generator</title>
+<link rel="stylesheet" href="{{url_for('tools.static', filename='css/RWG/RWG.css')}}">
+{% endblock %}
 
-    <a href="{{url_for('index')}}"> &#60; Home</a>
+{% block content %}
+<a href="{{url_for('index')}}"> &#60; Home</a>
 
-    <br><br><br>
-    <h1>Random Word Vanilla</h1>
-    <iframe src="{{url_for('tools.RWGw')}}">
-    </iframe>
+<br><br><br>
+<h1>Random Word Vanilla</h1>
+<iframe src="{{url_for('tools.RWGw')}}">
+</iframe>
 
-    <h1>Random Subject w/Adjectives</h1>
-    <iframe src="{{url_for('tools.RWGsubadj')}}">
-    </iframe>
+<h1>Random Subject w/Adjectives</h1>
+<iframe src="{{url_for('tools.RWGsubadj')}}">
+</iframe>
+{% endblock %}
 
-</body>
-
-</html>
+{% block script %}
+{% endblock %}

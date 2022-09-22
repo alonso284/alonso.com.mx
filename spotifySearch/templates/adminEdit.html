@@ -6,24 +6,24 @@
 {% endblock %} 
 
 {% block content %}
-    <h1>{{playlist[0]}}</h1>
-    <iframe src="https://open.spotify.com/embed/playlist/{{playlist[0]}}" width="50%" height="400" style="float: right;" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+<h1>{{playlist[0]}}</h1>
+<iframe src="https://open.spotify.com/embed/playlist/{{playlist[0]}}" width="50%" height="400" style="float: right;" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
 
-    <form method="POST" style="min-height:400px;">
-        <label for="mood">Mood</label><br>
-        <input type="text" value="{{playlist[1]}}" name="mood" id="mood"><br>
-        <span id="error">Valid Mood</span><br><br>
-        <label for="description">Description</label><br>
-        <textarea name="description" id="description" cols="75" rows="15">{{playlist[2]}}</textarea><br>
-        <input type="submit" id="submit">
-    </form>
+<form method="POST" style="min-height:400px;">
+    <label for="mood">Mood</label><br>
+    <input type="text" value="{{playlist[1]}}" name="mood" id="mood"><br>
+    <span id="error">Valid Mood</span><br><br>
+    <label for="description">Description</label><br>
+    <textarea name="description" id="description" cols="75" rows="15">{{playlist[2]}}</textarea><br>
+    <input type="submit" id="submit">
+</form>
 
-    <div id="questions"></div>
+<div id="questions"></div>
 
-    <a href="{{url_for('spotifySearch.RemovePlaylist', playlistID=playlist[0])}}">Delete</a>
+<a href="{{url_for('spotifySearch.RemovePlaylist', playlistID=playlist[0])}}">Delete</a>
 {% endblock %} 
 
 {% block scripts %}
 <script src="{{url_for('spotifySearch.static', filename='script/adminEdit.js')}}"></script>
-<script>body = document.getElementsByTagName('body')[0].onload = setUp();</script>
+<script>body = document.body.onload = setUp();</script>
 {% endblock %} 

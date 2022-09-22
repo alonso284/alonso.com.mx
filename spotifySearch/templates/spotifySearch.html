@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block head %}
-    <title>Spofity Search</title>
-    <link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/spotifySearch.css')}}">
+<title>Spofity Search</title>
+<link rel="stylesheet" href="{{url_for('spotifySearch.static', filename='css/spotifySearch.css')}}">
 {% endblock %}
     
 {% block content %}
-    <a href="{{url_for('spotifySearch.search')}}">Search</a>
+<a href="{{url_for('spotifySearch.search')}}">Search</a>
 {% endblock %}
 
 {% block scripts %}
-    <script src="{{url_for('spotifySearch.static', filename='script/search.js')}}"></script>
+<script src="{{url_for('spotifySearch.static', filename='script/search.js')}}"></script>
 {% endblock %}

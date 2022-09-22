@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "./base.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <title>Weather</title>
-    <link rel="stylesheet" href="{{url_for('tools.static', filename='./css/Weather/Weather.css')}}">
-    <link rel="shortcut icon" href="{{url_for('tools.static', filename='img/iconTool.png')}}">
-</head>
+{% block head %}
+<title>Weather</title>
+<link rel="stylesheet" href="{{url_for('tools.static', filename='./css/Weather/Weather.css')}}">
+{% endblock %}
 
-<body background="{{myImage}}">
+{% block content %}
+<a href="{{url_for('tools.Weather')}}">&#60; Back</a>
+<div>
 
-    <a href="{{url_for('tools.Weather')}}">&#60; Back</a>
-    <div>
+    <h1>{{myTemperature['name']}}</h1>
+    <h2>{{myTemperature['main']['temp']}}ºC</h2>
+</div>
+{% endblock %}
 
-        <h1>{{myTemperature['name']}}</h1>
-        <h2>{{myTemperature['main']['temp']}}ºC</h2>
-    </div>
-</body>
-
-</html>
+{% block script %}
+<script>document.body.style.background = 'url({{myImage}})'</script>
+{% endblock %}
