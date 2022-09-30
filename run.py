@@ -4,6 +4,7 @@ from flask_login import LoginManager
 import os
 from tools.tools import tools
 from spotifySearch.spotifySearch import spotifySearch
+from impossibleHangman.impossibleHangman import impossibleHangman
 
 # take environment variables from .env
 load_dotenv()  
@@ -23,6 +24,7 @@ app.secret_key = os.getenv("FLASK_KEY").encode("utf-8")
 app.register_blueprint(tools, url_prefix='/tools')
 # Load Spotify Search App
 app.register_blueprint(spotifySearch, url_prefix='/spotifySearch')
+app.register_blueprint(impossibleHangman, url_prefix='/impossibleHangman')
 
 # This callback is used to reload the user object from the user ID stored in the session. It should take the str ID of a user, and return the corresponding user object.
 @login_manager.user_loader

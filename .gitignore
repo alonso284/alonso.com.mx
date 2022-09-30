@@ -5,3 +5,4 @@ SpotifySearch.sql
 __pycache__/
 spotifySearch/__pycache__/
 tools/__pycache__/
+spotifySearch/.env

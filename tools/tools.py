@@ -3,6 +3,11 @@ import requests
 import os
 import random
 import json
+from dotenv import load_dotenv
+
+
+# load URL to database parameters
+load_dotenv()
 
 tools = Blueprint('tools', __name__,
                   static_folder='static', template_folder='templates')
@@ -21,9 +26,17 @@ def RWGw():
     return render_template('RWG/RWGw.html', randomWord=random.choice(randomWordArr))
 
 
-@tools.route('/RandomWordGenerator/subadj', methods=['GET'])
-def RWGsubadj():
-    return render_template('RWG/RWGsubadj.html')
+@tools.route('/RandomWordGenerator/subadj/<numberOfAdjectives>', methods=['GET'])
+def RWGsubadj(numberOfAdjectives):
+    with open('./tools/static/data/RWG/randomAdjectives.json') as myArr:
+        randomAjdArr = json.load(myArr)
+
+    numberOfAdjectives = int(numberOfAdjectives)
+    adjectives = []
+    for i in range(numberOfAdjectives):
+        adjectives.append(random.choice(randomAjdArr))
+
+    return render_template('RWG/RWGsubadj.html', adjectives=adjectives)
 
 
 # RANDOM COLOR GENERATOR
