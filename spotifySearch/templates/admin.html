@@ -19,14 +19,14 @@
         <th>Description</th>
         <th>Status</th>
     </tr>
-    {% for i in range(len) %}
+    {% for playlist in PlaylistSet %}
         <tr>
-            <td style="font-family:'Lucida Console', monospace">{{playlists[i][0]}}</td>
-            <td style="font-family:'Lucida Console', monospace">{{playlists[i][1]}}</td>
-            <td>{{playlists[i][2]}}</td>
-            <td>{{status[i]}}</td>
-            <td><a href="{{url_for('spotifySearch.adminEdit', playlistID=playlists[i][0])}}">Edit</a></td>
-            <td><a href="{{url_for('spotifySearch.RemovePlaylist', playlistID=playlists[i][0])}}">Delete</a></td>
+            <td style="font-family:'Lucida Console', monospace">{{playlist['ID']}}</td>
+            <td style="font-family:'Lucida Console', monospace">{{playlist['mood']}}</td>
+            <td>{{playlist['description']}}</td>
+            <td>{{playlist['status']}}</td>
+            <td><a href="{{url_for('spotifySearch.adminEdit', playlistID=playlist['ID'])}}">Edit</a></td>
+            <td><a href="{{url_for('spotifySearch.RemovePlaylist', playlistID=playlist['ID'])}}">Delete</a></td>
             
             
         </tr>

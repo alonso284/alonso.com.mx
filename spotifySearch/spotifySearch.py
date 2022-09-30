@@ -1,148 +1,109 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, Markup, session, Blueprint
 import requests
 import os
+import json
+from dotenv import load_dotenv
 import base64
 import psycopg2
 from urllib.parse import urlparse
+
+
 
 spotifySearch = Blueprint('spotifySearch', __name__,
                           static_folder='static', template_folder='templates')
 
 
+# load URL to database parameters
+load_dotenv() 
+result = urlparse(os.getenv("DATABASE_URL"))
+
+ # connect to the db
+conn = psycopg2.connect(
+    host=result.hostname,
+    database=result.path[1:],
+    user=result.username,
+    password=result.password,
+    port=result.port
+)
+# cursor
+cursor = conn.cursor()
+
 @spotifySearch.route('/', methods=['GET'])
 def index():
-    session['username'] = 'normal'
     return render_template('spotifySearch.html')
-
 
 # Admin Dashboard/ New playlist
 @spotifySearch.route('/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == "GET":
-        if session['username'] == 'admin':
-            result = urlparse(os.getenv("DATABASE_URL"))
+        if 'username' in session and session['username'] == 'admin':
 
-            # connect to the db
-            conn = psycopg2.connect(
-                host=result.hostname,
-                database=result.path[1:],
-                user=result.username,
-                password=result.password,
-                port=result.port
-            )
-            # cursor
-            cursor = conn.cursor()
-
+            print("Getting Database information")
             cursor.execute("SELECT * FROM playlists")
-            results = cursor.fetchall()
-            cursor.close()
-            conn.close()
+            selected = cursor.fetchall()
 
-            status = []
+            PlaylistSet = []
             
-            for i in results:
-                status.append(requests.get(f'https://open.spotify.com/playlist/{i[0]}').status_code)
-            print(status)
+            for playlist in selected:
+                PlaylistSet.append({})
+                PlaylistSet[-1]['ID'] = playlist[0]
+                PlaylistSet[-1]['mood'] = playlist[1]
+                PlaylistSet[-1]['description'] = playlist[2]
+                PlaylistSet[-1]['status'] = requests.get(f'https://open.spotify.com/playlist/{playlist[0]}').status_code
 
-
-            return render_template('admin.html', playlists=results, status=status, len = len(results))
+            return render_template('admin.html', PlaylistSet=PlaylistSet)
         return redirect(url_for('spotifySearch.login'))
     else:
-        print("evaluating")
+        print("Validating New Entry")
         if requests.get(f"https://open.spotify.com/playlist/{request.form['ID']}").status_code == 200:
-            # Check if id exists in database
-            # connect to the db
-            result = urlparse(os.getenv("DATABASE_URL"))
-            conn = psycopg2.connect(
-                host=result.hostname,
-                database=result.path[1:],
-                user=result.username,
-                password=result.password,
-                port=result.port
-            )
-            # cursor
-            cursor = conn.cursor()
+            
 
             cursor.execute(
                 f"SELECT * FROM playlists WHERE playlistID='{request.form['ID']}'")
-            toEdit = cursor.fetchall()
+            toEdit = cursor.fetchone()
 
-            if not toEdit:
-                print("ABBLE TO INSERT")
+            if toEdit == None:
+                print("Entry Validated")
                 cursor.execute(f"INSERT INTO playlists (playlistID, mood, description) VALUES ('{request.form['ID']}', '{'n'*12}', 'No Description');")
-                cursor.close()
                 conn.commit()
-                conn.close()
                 return redirect(url_for('spotifySearch.adminEdit', playlistID = request.form['ID']))
-
-            
-
-            cursor.close()
-            conn.close()
-
-            
-
+        print("Entry Invalidated")
         return redirect(url_for('spotifySearch.admin'))
 
 # Show individual Playlist
 @spotifySearch.route('/admin/<playlistID>', methods=['GET', 'POST'])
 def adminEdit(playlistID):
     if request.method == "POST":
-        print(request.form['mood'])
-        print(request.form['description'])
-        print(playlistID)
 
-        # Validate new MOOD
-        for i in request.form['mood']:
-            print(i)
-            if not(i == 'n' or i == 'A' or i == 'B' or i == 'C' or i == 'D'):
+        # Validate new MOOD requested
+        for letter in request.form['mood']:
+            if not(letter == 'n' or letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D'):
                 return redirect(url_for('spotifySearch.admin'))
 
-        result = urlparse(os.getenv("DATABASE_URL"))
-
-        # connect to the db
-        conn = psycopg2.connect(
-            host=result.hostname,
-            database=result.path[1:],
-            user=result.username,
-            password=result.password,
-            port=result.port
-        )
-        # cursor
-        cursor = conn.cursor()
-
-        # Update database
+        # Looking if playlist exists
         cursor.execute(
-            f"UPDATE playlists SET mood='{request.form['mood']}',  description = '{request.form['description']}' WHERE playlistID='{playlistID}';")
+            f"SELECT * FROM playlists WHERE playlistID='{playlistID}'")
+        playlist = cursor.fetchone()
 
-        cursor.close()
-        conn.commit()
-        conn.close()
+        if playlist != None:
+            print("Updating Playlist")
+            # Update database
+            cursor.execute(
+                f"UPDATE playlists SET mood='{request.form['mood']}',  description = '{request.form['description']}' WHERE playlistID='{playlistID}';")
+            conn.commit()
+        else:
+            print("Playlist Doesnt Exist")
 
         return redirect(url_for('spotifySearch.admin'))
 
-    if session['username'] == "admin":
-        print("user in session is admin")
-        result = urlparse(os.getenv("DATABASE_URL"))
-
-        # connect to the db
-        conn = psycopg2.connect(
-            host=result.hostname,
-            database=result.path[1:],
-            user=result.username,
-            password=result.password,
-            port=result.port
-        )
-        # cursor
-        cursor = conn.cursor()
+    if 'username' in session and session['username'] == 'admin':
 
         cursor.execute(
             f"SELECT * FROM playlists WHERE playlistID='{playlistID}'")
-        toEdit = cursor.fetchall()
-        cursor.close()
-        conn.close()
+        toEdit = cursor.fetchone()
 
-        return render_template('adminEdit.html', playlist=toEdit[0])
+        if toEdit != None:
+            return render_template('adminEdit.html', playlist=toEdit)
     return redirect(url_for('spotifySearch.login'))
 
 # Login page
@@ -152,9 +113,7 @@ def login():
         if (request.form['password'] == os.getenv("userAdmin") and request.form['username'] == "admin"):
             # Set session username to admin
             session['username'] = request.form['username']
-            print("login successful")
-            print(session['username'])
-
+            print("Logged in as " + session['username'])
         return redirect(url_for('spotifySearch.admin'))
 
     if 'admin' in session:
@@ -177,26 +136,13 @@ def logout():
 @spotifySearch.route('/RemovePlaylist/<playlistID>')
 def RemovePlaylist(playlistID):
 
-    result = urlparse(os.getenv("DATABASE_URL"))
-    conn = psycopg2.connect(
-                host=result.hostname,
-                database=result.path[1:],
-                user=result.username,
-                password=result.password,
-                port=result.port
-            )
-    # cursor
-    cursor = conn.cursor()
-
     cursor.execute(
             f"DELETE FROM playlists WHERE playlistID='{playlistID}';")
-    cursor.close()
     conn.commit()
-    conn.close()
+
+
     print("Deleted " + playlistID + "successfully")
     return redirect(url_for('spotifySearch.admin'))
-
-
 
 @spotifySearch.route('/search', methods=['GET'])
 def search():
@@ -206,27 +152,12 @@ def search():
 @spotifySearch.route('/results/<mood>', methods=['GET'])
 def results(mood):
 
-    result = urlparse(os.getenv("DATABASE_URL"))
-
-    # connect to the db
-    conn = psycopg2.connect(
-        host=result.hostname,
-        database=result.path[1:],
-        user=result.username,
-        password=result.password,
-        port=result.port
-    )
-    # cursor
-    cursor = conn.cursor()
-
     cursor.execute("SELECT * FROM playlists")
-    results = cursor.fetchall()
-    cursor.close()
-    conn.close()
+    selected = cursor.fetchall()
 
     orderedPlaylists = []
 
-    for r in results:
+    for r in selected:
         coincidence = 0
         total = 0
         for l in range(0, len(r[1])):
