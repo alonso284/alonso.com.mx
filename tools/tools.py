@@ -65,6 +65,7 @@ def WeatherLocation(location):
             os.getenv("G_KEY"), myPlace["candidates"][0]["place_id"])).json()
         myImage = "https://maps.googleapis.com/maps/api/place/photo?key={}&photoreference={}&maxwidth=800&maxheight=1000".format(
             os.getenv("G_KEY"), photoReference["result"]["photos"][0]["photo_reference"])
+        
         return render_template('Weather/Weather.html', myTemperature=myTemperature, myImage=myImage)
     except:
         return render_template('Weather/WeatherForm.html', ErrorMessage="Oops, not a city, try again")
